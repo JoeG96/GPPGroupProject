@@ -3,7 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Button
+  - PickUp
+  - Hand
+  - Feet
+  - HealthText
+  - Enemy
+  - Collide
+  - VCamBack
+  - VCamCinematic
+  - VCamLockOn
+  - VCamRight
+  - VCamLeft
+  - VCamFront
+  - VCamZoomIn
+  - Cutscene Camera
+  - Door Button
   layers:
   - Default
   - TransparentFX
@@ -11,12 +27,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - PickUp
+  - Button
+  - Lockable
+  - Player
+  - Enemy
   - 
   - 
   - 
