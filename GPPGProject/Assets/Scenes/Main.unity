@@ -10103,6 +10103,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2606494569990295895, guid: b4cd8598301f0f041a2066ca9d27ed1f, type: 3}
+      propertyPath: _onSpawnParticles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7446788340908701570, guid: b4cd8598301f0f041a2066ca9d27ed1f, type: 3}
       propertyPath: MinDistance
       value: 1.3018837
