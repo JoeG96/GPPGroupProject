@@ -8,6 +8,23 @@ TagManager:
   - Door Button
   - Collide
   - Checkpoint
+  - SpeedBoost
+  - Collectable
+  - Punch
+  - DoubleJump
+  - Button
+  - PickUp
+  - Hand
+  - Feet
+  - HealthText
+  - Enemy
+  - VCamBack
+  - VCamCinematic
+  - VCamLockOn
+  - VCamRight
+  - VCamLeft
+  - VCamFront
+  - VCamZoomIn
   layers:
   - Default
   - TransparentFX
@@ -15,12 +32,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - PickUp
+  - Button
+  - Lockable
+  - Player
+  - Enemy
   - 
   - 
   - 
