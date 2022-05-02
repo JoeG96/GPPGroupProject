@@ -54,6 +54,13 @@ public class Enemy : MonoBehaviour
         Chasing = 2
     }
 
+
+    [Header("Nav Mesh Values")]
+    [SerializeField] Transform[] _waypoints;
+    private int _CurrentWaypointIndex;
+    [SerializeField] float _startWaitTime = 4;
+    private float _WaitTime;
+
     Weapon _weapon;
     GameObject _player;
     PlayerController _playerController;
@@ -66,6 +73,9 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         LinkReferences();
+        _CurrentWaypointIndex = 0;
+        _navMeshAgent.SetDestination(_waypoints[_CurrentWaypointIndex].position);
+        _WaitTime = _startWaitTime;
         _currentState = States.Patrolling;
         
     }
@@ -179,20 +189,35 @@ public class Enemy : MonoBehaviour
         {
             _navMeshAgent.speed = _patrolSpeed;
             Debug.Log("Patrolling");
-/*
-            if ((transform.position.x == _waypoints[0].position.x) && (transform.position.y == _waypoints[0].position.y))
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
             {
-                MoveToNextWaypoint();
+                //  If the enemy arrives to the waypoint position then wait for a moment and go to the next
+                if (_WaitTime <= 0)
+                {
+                    NextPoint();
+                    Move(_patrolSpeed);
+                    _WaitTime = _startWaitTime;
+                }
+                else
+                {
+                    Stop();
+                    _WaitTime -= Time.deltaTime;
+                }
             }
-            if ((transform.position.x == _waypoints[1].position.x) && (transform.position.y == _waypoints[1].position.y))
-            {
-                MoveToNextWaypoint();
-            }
-            if ((transform.position.x == _waypoints[2].position.x) && (transform.position.y == _waypoints[2].position.y))
-            {
-                _currentWaypointIndex = 0;
-                _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
-            }*/
+            /*
+                        if ((transform.position.x == _waypoints[0].position.x) && (transform.position.y == _waypoints[0].position.y))
+                        {
+                            MoveToNextWaypoint();
+                        }
+                        if ((transform.position.x == _waypoints[1].position.x) && (transform.position.y == _waypoints[1].position.y))
+                        {
+                            MoveToNextWaypoint();
+                        }
+                        if ((transform.position.x == _waypoints[2].position.x) && (transform.position.y == _waypoints[2].position.y))
+                        {
+                            _currentWaypointIndex = 0;
+                            _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
+                        }*/
         }
         else if (_currentState == States.Chasing)
         {
@@ -218,5 +243,22 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         CanDamage = true;
+    }
+
+    public void NextPoint()
+    {
+        _CurrentWaypointIndex = (_CurrentWaypointIndex + 1) % _waypoints.Length;
+        _navMeshAgent.SetDestination(_waypoints[_CurrentWaypointIndex].position);
+    }
+
+    void Stop()
+    {
+        _navMeshAgent.isStopped = true;
+        _navMeshAgent.speed = 0;
+    }
+    void Move(float speed)
+    {
+        _navMeshAgent.isStopped = false;
+        _navMeshAgent.speed = speed;
     }
 }

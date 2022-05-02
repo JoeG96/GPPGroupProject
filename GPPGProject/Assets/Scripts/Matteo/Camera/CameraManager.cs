@@ -48,6 +48,7 @@ public class CameraManager : MonoBehaviour
     }
     private void Update()
     {
+       
         if (_playerController.IsOnSpline)
         {
             SplineCamera();
@@ -191,7 +192,7 @@ public class CameraManager : MonoBehaviour
     private void SplineCamera()
     {
         ActivateCamera(_90DegCameras, 1);
-        
+
     }
     private void ActivateCamera(CinemachineVirtualCamera cam)
     {

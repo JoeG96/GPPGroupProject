@@ -679,11 +679,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 1
-  cloudProjectId: 
+  cloudProjectId: c6d254bf-420c-4b4e-be88-ed8d8c58ef7f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: GPPGProject
+  organizationId: joegollin
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   virtualTexturingSupportEnabled: 0
