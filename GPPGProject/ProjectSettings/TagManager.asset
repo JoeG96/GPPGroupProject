@@ -25,6 +25,7 @@ TagManager:
   - VCamLeft
   - VCamFront
   - VCamZoomIn
+  - Dash
   layers:
   - Default
   - TransparentFX

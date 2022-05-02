@@ -12,7 +12,8 @@ public class PickupBase : MonoBehaviour
     {
         MultiJump = 1,
         Sprint = 2,
-        Dash = 3
+        Dash = 3,
+        Attack = 4
     }
     [SerializeField] public PowerUps _powerType;
     [SerializeField] public float _duration = 2f;
@@ -60,12 +61,13 @@ public class PickupBase : MonoBehaviour
         {
            Respawn();
         }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Despawn();
+            Despawn();   
         }
     }
     private void OnDestroy()
@@ -121,7 +123,6 @@ public class PickupBase : MonoBehaviour
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].Play();
-
             }
         }
     }
