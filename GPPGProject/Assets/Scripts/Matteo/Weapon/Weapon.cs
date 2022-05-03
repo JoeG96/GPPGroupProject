@@ -5,20 +5,23 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] float damage = 10f;
+    [SerializeField] float improvedDamage = 100f;
     [SerializeField] PlayerController playerController;
+
+    private void Awake()
+    {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
 
     public float GetDamage()
     {
-        playerController = GetComponent<PlayerController>();
-        /*if (playerController._attackActive)
+        if (playerController._attackActive)
         {
-            damage = 100f;
+            return improvedDamage;
         }
         else
         {
-            damage = 10f;
-        }*/
-            
-        return damage;
+            return damage;
+        }
     }
 }

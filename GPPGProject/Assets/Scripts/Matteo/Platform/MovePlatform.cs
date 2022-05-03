@@ -22,7 +22,7 @@ public class MovePlatform : MonoBehaviour
         _isMoving = false;
 
         transform.position = _splinePath.path.GetPointAtDistance(_distance, _splineEnd);
-        transform.rotation = _splinePath.path.GetRotationAtDistance(_distance, _splineEnd);
+        //transform.rotation = _splinePath.path.GetRotationAtDistance(_distance, _splineEnd);
     }
     private void Update()
     {
@@ -54,7 +54,7 @@ public class MovePlatform : MonoBehaviour
         {
             _distance += _platformSpeed * Time.deltaTime;
             transform.position = _splinePath.path.GetPointAtDistance(_distance, _splineEnd);
-            transform.rotation = _splinePath.path.GetRotationAtDistance(_distance, _splineEnd);
+            //transform.rotation = _splinePath.path.GetRotationAtDistance(_distance, _splineEnd);
         }
     }
     private void OnTriggerEnter(Collider other)

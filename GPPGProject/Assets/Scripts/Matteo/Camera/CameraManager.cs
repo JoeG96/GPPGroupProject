@@ -23,6 +23,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField] float _sphereRadiusLockOn = 100f;
     [SerializeField] float _breakLockDistance = 200f;
     [SerializeField] LayerMask _targetMask;
+
+    [SerializeField] bool _cineCamActive;
+
     Collider[] _hitTargets;
     Collider _currentTarget;
     GameObject _markTarget;
@@ -160,7 +163,7 @@ public class CameraManager : MonoBehaviour
         {
             _zoomInCamera.LookAt = null;
         }
-        if (_playerController.InCinematic)
+        if (_playerController.InCinematic && _cineCamActive)
         {
             ActivateCamera(_cinematicCamera);
         }

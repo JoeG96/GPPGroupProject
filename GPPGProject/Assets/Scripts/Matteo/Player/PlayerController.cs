@@ -760,6 +760,7 @@ public class PlayerController : MonoBehaviour
         _attackTimerText.enabled = false;
         _menuText.enabled = false;
         _menuInputText.enabled = false;
+        _attackTimerText.enabled = false;
         _menuBackground.enabled = true;
         _gameOverText.enabled = true;
     }
