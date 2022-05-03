@@ -18,10 +18,10 @@ public class PlayerController : MonoBehaviour
     bool _canDash = false;
 
     [Header("Particles")]
-    [SerializeField] GameObject sprintParticle;
-    [SerializeField] GameObject multiJumpParticle;
-    [SerializeField] GameObject dashParticle;
-    [SerializeField] GameObject attackParticle;
+    [SerializeField] ParticleSystem sprintParticle;
+    [SerializeField] ParticleSystem multiJumpParticle;
+    [SerializeField] ParticleSystem dashParticle;
+    [SerializeField] ParticleSystem attackParticle;
 
     [Header("Jump Variables")]
     [SerializeField] int _jumpMaxNumber = 2;
@@ -73,17 +73,17 @@ public class PlayerController : MonoBehaviour
     bool _dashActive = false;
     bool _multiJumpActive = false;
     bool _sprintActive = false;
-    //public bool _attackActive = false;
+    public bool _attackActive = false;
 
     float _dashDuration = 0f;
     float _multiJumpDuration = 0f;
     float _sprintDuration = 0f;
-    //float _attackDuration = 0f;
+    float _attackDuration = 0f;
 
     float _dashActivationTime = 0f;
     float _multiJumpActivationTime = 0f;
     float _sprintActivationTime = 0f;
-    //float _attackActivationTime = 0f;
+    float _attackActivationTime = 0f;
 
     CharacterController _playerCC;
     PlayerInputAction _playerInputActions;
@@ -103,8 +103,8 @@ public class PlayerController : MonoBehaviour
     Text _multiJumpTimerText;
     Image _multiJumpActiveicon;
 
-    //Text _attackTimerText;
-    //Image _attackActiveIcon;
+    Text _attackTimerText;
+    Image _attackActiveIcon;
 
     Text _healthText;
 
@@ -608,14 +608,14 @@ public class PlayerController : MonoBehaviour
                 case PickupBase.PowerUps.MultiJump:
                     _multiJumpActivationTime = Time.time;
                     _multiJumpActive = true;
-                    multiJumpParticle.SetActive(true);
+                    multiJumpParticle.Play();
                     _multiJumpDuration = collider.GetComponent<PickupBase>().PowerDuration;
                     TogglePowerIcon(_multiJumpActiveicon, _multiJumpTimerText, _multiJumpActive);
                     break;
                 case PickupBase.PowerUps.Sprint:
                     _sprintActivationTime = Time.time;
                     _sprintActive = true;
-                    sprintParticle.SetActive(true);
+                    sprintParticle.Play();
                     _sprintDuration = collider.GetComponent<PickupBase>().PowerDuration;
                     TogglePowerIcon(_sprintActiveIcon, _sprintTimerText, _sprintActive);
                     break;
@@ -623,17 +623,17 @@ public class PlayerController : MonoBehaviour
                     _dashActivationTime = Time.time;
                     _dashActive = true;
                     _canDash = true;
-                    dashParticle.SetActive(true);
+                    dashParticle.Play();
                     _dashDuration = collider.GetComponent<PickupBase>().PowerDuration;
                     TogglePowerIcon(_dashActiveIcon, _dashTimerText, _dashActive);
                     break;
-                /*case PickupBase.PowerUps.Attack:
+                case PickupBase.PowerUps.Attack:
                     _attackActivationTime = Time.time;
                     _attackActive = true;
-                    attackParticle.SetActive(true);
+                    attackParticle.Play();
                     _attackDuration = collider.GetComponent<PickupBase>().PowerDuration;
                     TogglePowerIcon(_attackActiveIcon, _attackTimerText, _attackActive);
-                    break;*/
+                    break;
                 default:
                     break;
             }
@@ -644,14 +644,14 @@ public class PlayerController : MonoBehaviour
         _multiJumpActive = DisablePowerUp(_multiJumpActive, multiJumpParticle, _multiJumpActivationTime, _multiJumpDuration, _multiJumpActiveicon, _multiJumpTimerText);
         _dashActive = DisablePowerUp(_dashActive, dashParticle, _dashActivationTime, _dashDuration, _dashActiveIcon, _dashTimerText);
         _sprintActive = DisablePowerUp(_sprintActive, sprintParticle, _sprintActivationTime, _sprintDuration, _sprintActiveIcon, _sprintTimerText);
-        //_attackActive = DisablePowerUp(_attackActive, attackParticle, _attackActivationTime, _attackDuration, _attackActiveIcon, _attackTimerText);
+        _attackActive = DisablePowerUp(_attackActive, attackParticle, _attackActivationTime, _attackDuration, _attackActiveIcon, _attackTimerText);
     }
-    private bool DisablePowerUp(bool power , GameObject particleEffect, float activationTime, float powerDuration, Image powerIcon, Text powerText)
+    private bool DisablePowerUp(bool power , ParticleSystem particleEffect, float activationTime, float powerDuration, Image powerIcon, Text powerText)
     {
         if (Time.time >= activationTime + powerDuration)
         {
             power = false;
-            particleEffect.SetActive(false);
+            particleEffect.Stop();
             TogglePowerIcon(powerIcon, powerText, power);
         }
         return power;
@@ -670,10 +670,10 @@ public class PlayerController : MonoBehaviour
         {
             TimerPrinter(_sprintActivationTime, _sprintDuration, _sprintTimerText, "Sprint: ");
         }
-        /*if(_attackActive)
+        if(_attackActive)
         {
             TimerPrinter(_attackActivationTime, _attackDuration, _attackTimerText, "Attack: ");
-        }*/
+        }
     }
     private void TimerPrinter(float activationTime, float duration, Text text, string str)
     {
@@ -698,8 +698,8 @@ public class PlayerController : MonoBehaviour
         _multiJumpTimerText = GameObject.Find("DoubleJumpTimerText").GetComponent<Text>();
         _multiJumpActiveicon = GameObject.Find("DoubleJumpBG").GetComponent<Image>();
 
-        //_attackTimerText = GameObject.Find("AttackTimerText").GetComponent<Text>();
-        //_attackActiveIcon = GameObject.Find("AttackBG").GetComponent<Image>();
+        _attackTimerText = GameObject.Find("AttackTimerText").GetComponent<Text>();
+        _attackActiveIcon = GameObject.Find("AttackBG").GetComponent<Image>();
 
         _healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
 
@@ -718,8 +718,8 @@ public class PlayerController : MonoBehaviour
         _multiJumpTimerText.enabled = false;
         _multiJumpActiveicon.enabled = false;
 
-        //_attackTimerText.enabled = false;
-        //_attackActiveIcon.enabled = false;
+        _attackTimerText.enabled = false;
+        _attackActiveIcon.enabled = false;
 
         _gameOverText.enabled = false;
     }
@@ -757,6 +757,7 @@ public class PlayerController : MonoBehaviour
         _dashTimerText.enabled = false;
         _multiJumpTimerText.enabled = false;
         _sprintTimerText.enabled = false;
+        _attackTimerText.enabled = false;
         _menuText.enabled = false;
         _menuInputText.enabled = false;
         _menuBackground.enabled = true;
