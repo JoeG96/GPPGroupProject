@@ -27,6 +27,8 @@ TagManager:
   - VCamZoomIn
   - Dash
   - Platform
+  - StartPoint
+  - EndPoint
   layers:
   - Default
   - TransparentFX
